@@ -7,7 +7,7 @@ class NotesService {
     this._notes = [];
   }
 
-  addNote ({ title, body, tags }){
+  addNote({ title, body, tags }) {
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
@@ -27,11 +27,11 @@ class NotesService {
     return id;
   }
 
-  getNotes (){
+  getNotes() {
     return this._notes;
   }
 
-  getNoteById (id){
+  getNoteById(id) {
     const note = this._notes.filter((n) => n.id === id)[0];
 
     if (!note) {
@@ -40,11 +40,11 @@ class NotesService {
     return note;
   }
 
-  editNoteById (id, { title, body, tags }){
+  editNoteById(id, { title, body, tags }) {
     const index = this._notes.findIndex((note) => note.id === id);
 
     if (index === -1) {
-      throw new NotFoundError('Gagal menemukan catatan. Id tidak ditemukan')
+      throw new NotFoundError('Gagal menemukan catatan. Id tidak ditemukan');
     }
 
     const updatedAt = new Date().toISOString();
@@ -58,7 +58,7 @@ class NotesService {
     };
   }
 
-  deleteNoteById (id){
+  deleteNoteById(id) {
     const index = this._notes.findIndex((note) => note.id === id);
 
     if (index === -1) {
