@@ -5,13 +5,13 @@ class UsersHandler {
 
     this.postUserHandler = this.postUserHandler.bind(this);
     this.getUserByIdHandler = this.getUserByIdHandler.bind(this);
+    this.getUsersByUsernameHandler = this.getUsersByUsernameHandler.bind(this);
   }
 
   async postUserHandler(request, h) {
     this._validator.validateUserPayload(request.payload);
-    const { username, password, fullname } = request.payload;
 
-    const userId = await this._service.addUser({ username, password, fullname });
+    const userId = await this._service.addUser(request.payload);
 
     const response = h.response({
       status: 'success',
@@ -33,6 +33,18 @@ class UsersHandler {
       status: 'success',
       data: {
         user,
+      },
+    };
+  }
+
+  async getUsersByUsernameHandler(request) {
+    const { username } = request.query;
+    const users = await this._service.getUsersByUsername(username);
+
+    return {
+      status: 'success',
+      data: {
+        users,
       },
     };
   }
